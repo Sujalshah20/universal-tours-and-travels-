@@ -21,7 +21,7 @@ session_start();
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="index.php">
-                    <img src="assets/images/brand.png" width="30" height="30" class="d-inline-block align-top mr-2" alt="Logo">
+                    <i class="fa fa-plane mr-2" style="color: #60a5fa; font-size: 1.5rem;"></i>
                     SKYLINE
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
