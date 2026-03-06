@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Cookie&family=Poppins:wght@600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&amp;display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&amp;display=swap");
+
+:root {
+    --bg-text-shadow: 0 2px 4px rgb(13 0 77 / 8%), 0 3px 6px rgb(13 0 77 / 8%), 0 8px 16px rgb(13 0 77 / 8%);
+    --bg-box-shadow: 0px 0px 20px 6px rgb(0 0 0 / 34%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Bai Jamjuree', sans-serif;
+    /* text-shadow: var(--bg-text-shadow); */
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    /* overflow: hidden; */
+}
+
+.carousel_section{
+    box-shadow: var(--bg-box-shadow);
+}
+/* side photo css */
+section {
+    height: 100%;
+    width: 50%;
+}
+
+.carousel-image {
+    height: 100vh;
+}
+
+.carousel-inner::after {
+    content: "";
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 255, 0.284);
+}
+
+/* login css */
+
+.logo {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    margin:20px 0;
+}
+
+.logo .bluebirdlogo {
+    height: 100%;
+}
+
+.logo p {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    color: rgb(66, 68, 74);
+    text-shadow: var(--bg-text-shadow);
+}
+
+.auth_container {
+    height: 80%;
+    margin: 50px;
+}
+
+#Log_in {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* login btn and staff btn ne change karvu hoi toh eya thin thase */
+.role_btn {
+    display: flex;
+    gap: 30px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.role_btn .btns {
+    height: 40px;
+    width: 200px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: rgba(93, 102, 116, 0.318);
+    font-size: 17px;
+    font-weight: 700;
+}
+/* login & staff btn na color change thai eya thin */
+.role_btn .btns:hover{
+    background-image: linear-gradient(90deg, rgba(249, 251, 252, 0.863), rgba(0, 89, 255, 0.705));
+    transition: ease-in-out;
+    color: white;
+}
+
+.btns.active{
+    background-image: linear-gradient(90deg, rgba(5, 74, 201, 0.705), rgba(255, 255, 255, 0.753));
+    color: white;
+}
+
+.authsection {
+    width: 70%;
+    margin: 10px;
+    display: none;
+    text-align: center;
+    animation: screen_animation .4s;
+}
+/* toggle display  */ 
+/* user ane staff ne username pass ne design eya thin chane thase */
+.user_login.active{
+    display: block;
+}
+
+.employee_login.active{
+    display: block;
+}
+
+.form-floating {
+    margin: 15px 0;
+} 
+/* login btn edited karwvu hoi toh eya karwa nu */
+.auth_btn {
+    padding: 15px 30px;
+    border: unset;
+    border-radius: 15px;
+    background-color: rgba(118, 141, 176, 0.318);
+    z-index: 1;
+    position: relative;
+    font-size: 17px;
+    transition: all 250ms;
+    overflow: hidden;
+}
+
+.auth_btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    z-index: -1;
+    border-radius: 10px;
+    background-image: linear-gradient(90deg, rgba(31, 128, 158, 0.856), rgba(0, 30, 255, 0.456));
+    transition: all 250ms
+}
+/* login btn na hover ne edit karvi hoi toh eya thin karwa ni */
+.auth_btn:hover {
+    border: 1px solid #E7E7E8;
+    border-color: transparent;
+    border-radius: 0px;
+    background: #0133d4;
+    color: #ffffff ;
+    padding: 16px 43px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
+    -o-border-radius: 0px;
+}
+
+.auth_btn:hover::before {
+    position: absolute;
+    content: '';
+    position: absolute;
+    -webkit-transition: all 0.5s ease-out 0s;
+    transition: all 0.5s ease-out 0s;
+    top: 0;
+    left: 0;
+    background: var(--heading-color);
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    opacity: 0;
+}
+.auth_btn:hover::after{
+    position: absolute;
+    content: '';
+    position: absolute;
+    -webkit-transition: all 0.5s ease-out 0s;
+    transition: all 0.5s ease-out 0s;
+    bottom: 0;
+    right: 0;
+    background: var(--heading-color);
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    opacity: 0;
+}
+.auth_btn, .auth_btn:hover, .auth_btn:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+.footer_line{
+    margin: 20px 0;
+}
+/* sing up wada link ne color change karwvu hoi toh  */
+.page_move_btn{
+    color:  rgb(255, 0, 0);
+    cursor: pointer;
+}
+.page_move_btn:hover{
+    color: rgba(12, 235, 235, 0.599);
+}
+
+/* signup */
+#sign_up{
+    height: 100%;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user_signup{
+    width: 70%;
+    text-align: center;
+    animation: screen_animation .4s;
+}
+
+/* animation frame */
+@keyframes screen_animation {
+    0%{
+        transform: translateX(50px);
+    }
+}
+
+
+
+/* responsive stuff */
+
+@media(max-width: 30rem){
+    .carousel_section{
+        display: none;
+    }
+    #auth_section{
+        width: 100%;
+    }
+    .auth_container
+    {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    #Log_in .role_btn .btns{
+        width: 90px;
+    }
+}

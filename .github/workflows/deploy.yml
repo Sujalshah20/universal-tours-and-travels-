@@ -1,0 +1,30 @@
+name: Deploy to InfinityFree
+
+on:
+  push:
+    branches:
+      - main # Change this to master if your default branch is master
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+        
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /htdocs/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/
+          # DANGEROUS: If set to true, this will sync the destination directory with your repository
+          # meaning it will DELETE files on the server that are not in your repository!
+          # Optional, defaults to false. Leave it false for safety initially.
+          # dangerous-clean-slate: true

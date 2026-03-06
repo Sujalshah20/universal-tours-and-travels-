@@ -1,0 +1,5 @@
+http://localhost/phpmyadmin/OnlineFlightBooking-PHP/travel%20websiteproject%20%20(ORIGNAL)/Hotel-Management-System-main/index.php
+
+http://localhost/phpmyadmin/OnlineFlightBooking-PHP/travel%20websiteproject%20%20(ORIGNAL)/Hotel-Management-System-main/home.php
+
+http://localhost/phpmyadmin/OnlineFlightBooking-PHP/travel%20websiteproject%20%20(ORIGNAL)/Hotel-Management-System-main/admin/admin.php
