@@ -53,15 +53,15 @@ if(isset($_POST['signup_submit'])) {
                             mysqli_stmt_execute($stmt);  
                             
                             // LOGIN USer                            
-                            $sql = 'SELECT * FROM Users WHERE username=? OR email=?;';
+                            $sql = 'SELECT user_id, username, email, password FROM Users WHERE username=? OR email=?;';
                             $stmt = mysqli_stmt_init($conn);
                             if(!mysqli_stmt_prepare($stmt,$sql)) {
                                 header('Location: ../index.php?error=sqlerror');
                                 exit();            
                             } else {
                                 mysqli_stmt_bind_param($stmt,'ss',$username,$username);            
-                            mysqli_stmt_execute($stmt);
-                            mysqli_stmt_store_result($stmt);
+                                mysqli_stmt_execute($stmt);
+                                mysqli_stmt_store_result($stmt);
                             if (mysqli_stmt_num_rows($stmt) > 0) {
                                 mysqli_stmt_bind_result($stmt, $id, $uname, $mail, $pwd);
                                 if (mysqli_stmt_fetch($stmt)) {
