@@ -1,266 +1,243 @@
 <?php include_once 'helpers/helper.php'; ?>
-<?php subview('header.php');    ?>
-<link rel="stylesheet" href="assets/css/form.css">
+<?php subview('header.php'); ?>
+
 <style>
+body { background: #f5f5f5; }
+.page-header { background: linear-gradient(90deg, #05012d 0%, #07263d 100%); padding: 28px 0; }
+.page-header h2 { color: #fff; font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+.page-header p { color: rgba(255,255,255,0.65); font-size: 13px; margin: 0; }
 
-.rating {
-  display: inline-block;
-  position: relative;
-  height: 50px;
-  line-height: 50px;
-  font-size: 50px;
-}
-.rating label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  cursor: pointer;
-}
+.fb-wrap { padding: 36px 0 60px; }
 
-.rating label:last-child {
-  position: static;
+.fb-card {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    overflow: hidden;
 }
+.fb-card-header {
+    background: linear-gradient(90deg, #05012d 0%, #07263d 100%);
+    padding: 18px 28px;
+    display: flex; align-items: center; gap: 14px;
+}
+.fb-card-header i { font-size: 22px; color: #53b2fe; }
+.fb-card-header h3 { color: #fff; font-size: 16px; font-weight: 700; margin: 0; }
+.fb-card-header p { color: rgba(255,255,255,0.6); font-size: 12px; margin: 0; }
+.fb-card-body { padding: 32px; }
 
-.rating label:nth-child(1) {
-  z-index: 5;
+/* Form fields */
+.fb-field { margin-bottom: 22px; }
+.fb-label { display: block; font-size: 11px; font-weight: 700; color: #9b9b9b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.fb-input {
+    width: 100%;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    color: #333;
+    background: #fff;
+    outline: none;
+    transition: all 0.25s;
 }
+.fb-input:focus { border-color: #008cff; box-shadow: 0 0 0 3px rgba(0,140,255,0.1); }
+.fb-input::placeholder { color: #c0c0c0; font-weight: 400; }
+.fb-textarea {
+    width: 100%;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    color: #333;
+    background: #fff;
+    outline: none;
+    transition: all 0.25s;
+    resize: vertical;
+    min-height: 90px;
+}
+.fb-textarea:focus { border-color: #008cff; box-shadow: 0 0 0 3px rgba(0,140,255,0.1); }
+.fb-select {
+    width: 100%;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    color: #333;
+    background: #fff;
+    outline: none;
+    transition: all 0.25s;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239b9b9b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+}
+.fb-select:focus { border-color: #008cff; box-shadow: 0 0 0 3px rgba(0,140,255,0.1); }
 
-.rating label:nth-child(2) {
-  z-index: 4;
+/* Star Rating — Gold MMT style */
+.star-rating-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
+.star-label-text { font-size: 11px; font-weight: 700; color: #9b9b9b; text-transform: uppercase; letter-spacing: 0.5px; }
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 8px;
+}
+.star-rating input { display: none; }
+.star-rating label {
+    font-size: 34px;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: color 0.15s, transform 0.15s;
+    line-height: 1;
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+    color: #f5a623;
+}
+.star-rating label:hover { transform: scale(1.1); }
 
-.rating label:nth-child(3) {
-  z-index: 3;
-}
+.rating-text { font-size: 12px; color: #9b9b9b; font-weight: 700; margin-top: 4px; }
 
-.rating label:nth-child(4) {
-  z-index: 2;
-}
+/* Message alerts */
+.alert-success-mmt { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #22c55e; border-radius: 4px; padding: 14px 18px; color: #16a34a; font-size: 14px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+.alert-error-mmt { background: #fff5f5; border: 1px solid #fecaca; border-left: 4px solid #ef4444; border-radius: 4px; padding: 14px 18px; color: #dc2626; font-size: 14px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
 
-.rating label:nth-child(5) {
-  z-index: 1;
+/* Submit button */
+.btn-submit-fb {
+    background: linear-gradient(93deg, #53b2fe, #065af3);
+    border: none; border-radius: 50px;
+    color: #fff; font-size: 15px; font-weight: 900;
+    font-family: 'Lato', sans-serif;
+    padding: 14px 60px;
+    cursor: pointer; transition: all 0.25s; letter-spacing: 0.5px; text-transform: uppercase;
+    box-shadow: 0 4px 16px rgba(6,90,243,0.3);
 }
+.btn-submit-fb:hover { background: linear-gradient(93deg, #065af3, #053ab5); box-shadow: 0 6px 24px rgba(6,90,243,0.4); transform: translateY(-2px); }
 
-.rating label input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-}
-
-.rating label .icon {
-  float: left;
-  color: transparent;
-}
-
-.rating label:last-child .icon {
-  color: #000;
-}
-
-.rating:not(:hover) label input:checked ~ .icon,
-.rating:hover label:hover input ~ .icon {
-  color: #09f;
-}
-
-.rating label input:focus:not(:checked) ~ .icon:last-child {
-  color: #000;
-  text-shadow: 0 0 5px #09f;
-}  
-body {
-  background: #bdc3c7;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #0a9396, #94d2bd);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #94d2bd , #0a9396); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-}
-@font-face {
-  font-family: 'product sans';
-  src: url('assets/css/Product Sans Bold.ttf');
-  }
-h1 {
-  font-size: 50px !important;
-  margin-bottom: 20px;  
-  color: white;  
-  font-family :'product sans' !important;
-  text-align: center;
-}
-
-textarea {
-  color: cornflowerblue !important;
-  border :3px solid #31B0D5 !important;
-  background-color: whitesmoke !important;
-  font-weight: bold !important;
-}
-textarea:focus {
-  outline-style: none !important;
-  outline: none !important;
-}
-*:focus {
-    outline: none !important;
-}
-input {
-    border :0px !important;
-    border-bottom: 2px solid #31B0D5 !important;
-    color :cornflowerblue !important;
-    border-radius: 0px !important;
-    font-weight: bold !important;
-    border: none;
-    border-bottom: 2px solid #31B0D5;      
-  }
-  label {
-    color : #79BAEC !important;
-    font-size: 19px;
-  }  
-  div.form-group label {
-    color: cornflowerblue !important;
-    font-weight: bold;
-  }
-  div.rating label{
-    font-size: 40px !important;
-  }
-.input-group {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-.form-box {
-  padding: 40px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  
-}
+/* Section divider */
+.fb-divider { border: none; border-top: 1px solid #e0e0e0; margin: 28px 0; }
 </style>
 
-<main>
-<?php
-if(isset($_GET['error'])) {
-    if($_GET['error'] === 'invalidemail') {
-        echo '<script>alert("Invalid email")</script>';
-    } else if($_GET['error'] === 'sqlerror') {
-        echo"<script>alert('Database error')</script>";
-    } else if($_GET['error'] === 'success') {
-      echo"<script>alert('Thank you for your Feedback')</script>";
-    } 
-}
-?>
-<div class="container mb-4">
-  <h1> <i class="far fa-comment-alt"></i> FEEDBACK</h1>
-  <div class="row justify-content-center">
-  <div class="col-md-6 bg-light form-box">
-    <form action="includes/feedback.inc.php" method="POST">
-      <div class="row justify-content-center">  
-          <div class="col-12 ">              
-            <div class="input-group">
-                <label for="user_id">Email</label>
-                <input type="text" name="email" id="user_id" required >
-              </div>              
-          </div>                      
-          <div class="col-12 mt-4">
-            <div class="form-group">         
-              <label for="exampleFormControlTextarea1">What was your first impression
-                  when you entered the website?</label>     
-              <textarea class="form-control" id="exampleFormControlTextarea1" name="1"                
-                rows="3" required></textarea>
-            </div>                
-          </div>             
-          
-          <div class="col-12 mt-4">
-            <div class="form-group">         
-              <select class="mt-4" name="2" style="border: 0px; border-bottom: 
-              2px solid #31B0D5; background-color: whitesmoke !important;
-              font-weight: bold !important;color :cornflowerblue !important;
-              width:100%" required>
-                <option  selected disabled>How did you first hear about us?</option>
-                <option >Search Engine</option>
-                <option >Social Media</option>
-                <option >Friend/Relative</option>
-                <option >Word of Mouth</option>
-                <option >Television</option>
-                <option>Other</option>
-              </select> 
-            </div>                
-          </div>                   
-          
-          <div class="col-12 mt-4">
-            <div class="form-group">         
-              <label for="exampleFormControlTextarea1">Is there anything missing on this page?</label>     
-              <textarea class="form-control" id="exampleFormControlTextarea1" name="3"                
-                rows="3" required></textarea>
-            </div>                
-          </div>          
-      </div>  
-    
-      <div class="row">
-        <div class="rating ml-3">  
-          <label>
-            <input type="radio" name="stars" value="1" required />
-            <span class="icon">★</span>
-          </label>
-          <label>
-            <input type="radio" name="stars" value="2" required />
-            <span class="icon">★</span>
-            <span class="icon">★</span>
-          </label>
-          <label>
-            <input type="radio" name="stars" value="3" required />
-            <span class="icon">★</span>
-            <span class="icon">★</span>
-            <span class="icon">★</span>
-          </label>
-          <label>
-            <input type="radio" name="stars" value="4" required />
-            <span class="icon">★</span>
-            <span class="icon">★</span>
-            <span class="icon">★</span>
-            <span class="icon">★</span>
-          </label>
-          <label>
-            <input type="radio" name="stars" value="5" required />
-            <span class="icon">★</span>
-            <span class="icon">★</span>
-            <span class="icon">★</span>
-            <span class="icon">★</span>
-            <span class="icon">★</span>
-          </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col text-center">
-          <button name="feed_but" type="submit" 
-            class="btn btn-primary mt-3">
-            <div style="font-size: 1.5rem;">
-            <i class="fa fa-lg fa-arrow-right"></i>  
-            </div>
-          </button>
-        </div>
-      </div>
-
-    </form>
-  </div>
-  </div>
+<div class="page-header">
+    <div class="container">
+        <h2><i class="fa fa-comment mr-2" style="color:#53b2fe;"></i> Share Your Feedback</h2>
+        <p>Your experience helps us improve. We value your thoughts!</p>
+    </div>
 </div>
-<?php subview('footer.php'); ?> 
+
+<div class="fb-wrap">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-7">
+
+                <?php
+                if(isset($_GET['error'])) {
+                    if($_GET['error'] === 'success') {
+                        echo '<div class="alert-success-mmt"><i class="fa fa-check-circle"></i> Thank you! Your feedback has been submitted successfully.</div>';
+                    } elseif($_GET['error'] === 'invalidemail') {
+                        echo '<div class="alert-error-mmt"><i class="fa fa-exclamation-circle"></i> Please enter a valid email address.</div>';
+                    } elseif($_GET['error'] === 'sqlerror') {
+                        echo '<div class="alert-error-mmt"><i class="fa fa-exclamation-circle"></i> Database error. Please try again.</div>';
+                    }
+                }
+                ?>
+
+                <div class="fb-card animate-in">
+                    <div class="fb-card-header">
+                        <i class="fa fa-pencil-square-o"></i>
+                        <div>
+                            <h3>Customer Feedback Form</h3>
+                            <p>Takes less than 2 minutes to complete</p>
+                        </div>
+                    </div>
+                    <div class="fb-card-body">
+                        <form action="includes/feedback.inc.php" method="POST">
+
+                            <div class="fb-field">
+                                <label class="fb-label"><i class="fa fa-envelope mr-1"></i> Your Email Address</label>
+                                <input type="email" name="email" class="fb-input" placeholder="example@email.com" required>
+                            </div>
+
+                            <hr class="fb-divider">
+
+                            <div class="fb-field">
+                                <label class="fb-label">What was your first impression when you visited?</label>
+                                <textarea name="1" class="fb-textarea" placeholder="Share your first impression of our website..." required></textarea>
+                            </div>
+
+                            <div class="fb-field">
+                                <label class="fb-label">How did you first hear about us?</label>
+                                <select name="2" class="fb-select" required>
+                                    <option value="" selected disabled>— Select an option —</option>
+                                    <option>Search Engine (Google, Bing)</option>
+                                    <option>Social Media (Instagram, Facebook)</option>
+                                    <option>Friend / Relative</option>
+                                    <option>Word of Mouth</option>
+                                    <option>Television / Advertisement</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+
+                            <div class="fb-field">
+                                <label class="fb-label">Is there anything missing or that could be improved?</label>
+                                <textarea name="3" class="fb-textarea" placeholder="Any suggestions for improvement are welcome..." required></textarea>
+                            </div>
+
+                            <hr class="fb-divider">
+
+                            <div class="fb-field">
+                                <div class="star-rating-wrap">
+                                    <div class="star-label-text"><i class="fa fa-star mr-1"></i> Overall Rating</div>
+                                    <div class="star-rating">
+                                        <input type="radio" id="star5" name="stars" value="5" required>
+                                        <label for="star5" title="5 stars">★</label>
+                                        <input type="radio" id="star4" name="stars" value="4">
+                                        <label for="star4" title="4 stars">★</label>
+                                        <input type="radio" id="star3" name="stars" value="3">
+                                        <label for="star3" title="3 stars">★</label>
+                                        <input type="radio" id="star2" name="stars" value="2">
+                                        <label for="star2" title="2 stars">★</label>
+                                        <input type="radio" id="star1" name="stars" value="1">
+                                        <label for="star1" title="1 star">★</label>
+                                    </div>
+                                    <div class="rating-text" id="rating-text">Tap to rate your experience</div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" name="feed_but" class="btn-submit-fb">
+                                    <i class="fa fa-paper-plane mr-2"></i> Submit Feedback
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php subview('footer.php'); ?>
 <script>
-  $(document).ready(function(){
-  $('.input-group input').focus(function(){
-    me = $(this) ;
-    $("label[for='"+me.attr('id')+"']").addClass("animate-label");
-  }) ;
-  $('.input-group input').blur(function(){
-    me = $(this) ;
-    if ( me.val() == ""){
-      $("label[for='"+me.attr('id')+"']").removeClass("animate-label");
-    }
-  }) ;
-  // $('#test-form').submit(function(e){
-  //   e.preventDefault() ;
-  //   alert("Thank you") ;
-  // })
+const ratings = { 5: 'Excellent! 🎉', 4: 'Good 👍', 3: 'Average 😐', 2: 'Poor 😞', 1: 'Very Bad 😢' };
+document.querySelectorAll('.star-rating input').forEach(input => {
+    input.addEventListener('change', function() {
+        document.getElementById('rating-text').textContent = ratings[this.value] || 'Tap to rate';
+    });
 });
 </script>
-</main>
-<footer>
-	<em><h5 class="text-light text-center p-0 brand mt-2">
-				<img src="assets/images/airtic.png" 
-					height="40px" width="40px" alt="">				
-			universal Online Flight Booking system</h5></em>
-	<p class="text-light text-center">&copy; <?php echo date('Y');?> - Developed By sujal shah & this teams</p>
-</footer>

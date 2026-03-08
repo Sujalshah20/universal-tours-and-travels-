@@ -8,85 +8,102 @@ session_start();
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://kit.fontawesome.com/44f557ccce.js"></script>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <link rel="stylesheet" href="assets/css/main.css">
-        <title>Online Flight Booking | Premium Travel</title>         
-        <link rel="icon" href="assets/images/brand.png" type="image/x-icon">       
+        <title>Skyline — Flights, Hotels, Holidays</title>
+        <link rel="icon" href="assets/images/brand.png" type="image/x-icon">
     </head>
-    <body>        
-        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="index.php">
-                    <i class="fa fa-plane mr-2" style="color: #60a5fa; font-size: 1.5rem;"></i>
-                    SKYLINE
+    <body>
+        <!-- ===== TOP NAVBAR (Dark) ===== -->
+        <nav class="navbar-top">
+            <div class="container d-flex align-items-center justify-content-between flex-wrap" style="gap:8px;">
+                <a href="index.php" class="navbar-brand" style="text-decoration:none; margin:0;">
+                    <span>make</span>my<span>trip</span>
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php">Home</a>
-                        </li>
-                        <?php if(isset($_SESSION['userId'])) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="my_flights.php">My Flights</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="ticket.php">Tickets</a>
-                        </li>
-                        <?php } ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="feedback.php">Feedback</a>
-                        </li>
-                    </ul>
+                <div class="d-flex align-items-center" style="gap: 8px; flex-wrap:wrap;">
+                    <a href="#" class="nav-link-top" style="text-decoration:none;">List Your Property</a>
+                    <a href="#" class="nav-link-top" style="text-decoration:none; border-left:1px solid #444; padding-left:12px !important;">myBiz</a>
 
-                    <div class="d-flex align-items-center">
-                        <?php
-                        if(isset($_SESSION['userId'])) {
-                            echo '
-                            <div class="dropdown">
-                                <button class="btn btn-link text-light dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <div class="avatar-sm mr-2 d-flex align-items-center justify-content-center" style="width:32px; height:32px; background:rgba(255,255,255,0.1); border-radius:50%;">
-                                        <i class="fa fa-user"></i>
-                                    </div>
-                                    <span class="font-weight-600">'.htmlspecialchars($_SESSION['userUid']).'</span>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right glass-panel mt-2" aria-labelledby="userDropdown">
-                                    <form action="includes/logout.inc.php" method="POST">
-                                        <button class="dropdown-item text-danger" type="submit">
-                                            <i class="fa fa-sign-out mr-2"></i> Logout
-                                        </button>
-                                    </form> 
-                                </div>
-                            </div>';
-                        } else {
-                            echo '
-                            <div class="dropdown">
-                                <button class="btn btn-premium dropdown-toggle" type="button" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Get Started
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right glass-panel mt-2" aria-labelledby="loginDropdown">
-                                    <a class="dropdown-item" href="login.php">
-                                        <i class="fa fa-user-circle mr-2"></i> Passenger Login
-                                    </a>
-                                    <div class="dropdown-divider border-secondary"></div>
-                                    <a class="dropdown-item" href="admin/login.php">
-                                        <i class="fa fa-lock mr-2"></i> Admin Portal
-                                    </a>
-                                </div>
-                            </div>';
-                        }
-                        ?>
-                    </div>
+                    <?php if(isset($_SESSION['userId'])): ?>
+                        <div class="dropdown ml-2">
+                            <button class="btn-login-mmt dropdown-toggle" type="button" id="userMenuBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user mr-1"></i>
+                                <?php echo htmlspecialchars($_SESSION['userUid']); ?>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right mt-1" aria-labelledby="userMenuBtn" style="border-radius:4px; border:1px solid #e0e0e0; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                                <a class="dropdown-item" href="my_flights.php" style="font-size:13px; font-weight:700; color:#4a4a4a;">
+                                    <i class="fa fa-ticket mr-2" style="color:#008cff;"></i> My Trips
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <form action="includes/logout.inc.php" method="POST">
+                                    <button class="dropdown-item text-danger" type="submit" style="font-size:13px; font-weight:700;">
+                                        <i class="fa fa-sign-out mr-2"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <div class="dropdown ml-2">
+                            <button class="btn-login-mmt dropdown-toggle" type="button" id="loginBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Login or Create Account
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right mt-1" aria-labelledby="loginBtn" style="border-radius:4px; border:1px solid #e0e0e0; box-shadow:0 4px 20px rgba(0,0,0,0.15); min-width:200px;">
+                                <a class="dropdown-item" href="login.php" style="font-size:13px; font-weight:700; color:#4a4a4a;">
+                                    <i class="fa fa-user-circle mr-2" style="color:#008cff;"></i> Passenger Login
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="register.php" style="font-size:13px; font-weight:700; color:#4a4a4a;">
+                                    <i class="fa fa-user-plus mr-2" style="color:#008cff;"></i> Create Account
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="admin/login.php" style="font-size:13px; font-weight:700; color:#4a4a4a;">
+                                    <i class="fa fa-lock mr-2" style="color:#9b9b9b;"></i> Admin Portal
+                                </a>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>
-        <div style="height: 80px;"></div> <!-- Spacer for fixed-top navbar -->
+
+        <!-- ===== BOTTOM NAVBAR (White service tabs) ===== -->
+        <nav class="navbar-bottom">
+            <div class="container">
+                <div class="d-flex align-items-center overflow-auto" style="gap:0;">
+                    <a href="index.php" class="nav-tab-item active" data-target="flights">
+                        <i class="fa fa-plane"></i>
+                        Flights
+                    </a>
+                    <a href="#" class="nav-tab-item">
+                        <i class="fa fa-bed"></i>
+                        Hotels
+                    </a>
+                    <a href="#" class="nav-tab-item">
+                        <i class="fa fa-train"></i>
+                        Trains
+                    </a>
+                    <a href="#" class="nav-tab-item">
+                        <i class="fa fa-bus"></i>
+                        Bus
+                    </a>
+                    <a href="#" class="nav-tab-item">
+                        <i class="fa fa-car"></i>
+                        Cabs
+                    </a>
+                    <a href="feedback.php" class="nav-tab-item">
+                        <i class="fa fa-star"></i>
+                        Feedback
+                    </a>
+                    <?php if(isset($_SESSION['userId'])): ?>
+                    <a href="my_flights.php" class="nav-tab-item">
+                        <i class="fa fa-ticket"></i>
+                        My Trips
+                    </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </nav>
