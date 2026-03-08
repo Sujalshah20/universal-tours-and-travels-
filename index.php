@@ -1,6 +1,9 @@
 <?php include_once 'helpers/helper.php'; ?>
 <?php subview('header.php'); 
 require 'helpers/init_conn_db.php';                      
+
+// Early connection check
+$is_db_connected = isset($conn) && $conn !== false;
 ?> 
 
 <style>
@@ -414,10 +417,20 @@ require 'helpers/init_conn_db.php';
                         <select name="dep_city" class="city-select-mmt" required>
                             <option value="" disabled selected>City or Airport</option>
                             <?php
-                            $sql = 'SELECT * FROM Cities ORDER BY city ASC';
-                            $res = mysqli_query($conn, $sql);
-                            while ($row = mysqli_fetch_assoc($res)) {
-                                echo '<option value="'.htmlspecialchars($row['city']).'">'.htmlspecialchars($row['city']).'</option>';
+                            if ($is_db_connected) {
+                                $sql = 'SELECT * FROM Cities ORDER BY city ASC';
+                                $res = mysqli_query($conn, $sql);
+                                if ($res) {
+                                    while ($row = mysqli_fetch_assoc($res)) {
+                                        echo '<option value="'.htmlspecialchars($row['city']).'">'.htmlspecialchars($row['city']).'</option>';
+                                    }
+                                } else {
+                                    echo '<option value="" disabled>Error loading cities</option>';
+                                }
+                            } else {
+                                echo '<option value="" disabled>Database not connected</option>';
+                                echo '<option value="Mumbai">Mumbai (Demo)</option>';
+                                echo '<option value="Delhi">Delhi (Demo)</option>';
                             }
                             ?>
                         </select>
@@ -431,9 +444,15 @@ require 'helpers/init_conn_db.php';
                         <select name="arr_city" class="city-select-mmt" required>
                             <option value="" disabled selected>City or Airport</option>
                             <?php
-                            mysqli_data_seek($res, 0);
-                            while ($row = mysqli_fetch_assoc($res)) {
-                                echo '<option value="'.htmlspecialchars($row['city']).'">'.htmlspecialchars($row['city']).'</option>';
+                            if ($is_db_connected && $res) {
+                                mysqli_data_seek($res, 0);
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    echo '<option value="'.htmlspecialchars($row['city']).'">'.htmlspecialchars($row['city']).'</option>';
+                                }
+                            } else {
+                                echo '<option value="" disabled>Database not connected</option>';
+                                echo '<option value="Bangalore">Bangalore (Demo)</option>';
+                                echo '<option value="Dubai">Dubai (Demo)</option>';
                             }
                             ?>
                         </select>
@@ -499,9 +518,15 @@ require 'helpers/init_conn_db.php';
                             <select name="dep_city" class="city-select-mmt" required>
                                 <option value="" disabled selected>City or Airport</option>
                                 <?php
-                                mysqli_data_seek($res, 0);
-                                while ($row = mysqli_fetch_assoc($res)) {
-                                    echo '<option value="'.htmlspecialchars($row['city']).'">'.htmlspecialchars($row['city']).'</option>';
+                                if ($is_db_connected && $res) {
+                                    mysqli_data_seek($res, 0);
+                                    while ($row = mysqli_fetch_assoc($res)) {
+                                        echo '<option value="'.htmlspecialchars($row['city']).'">'.htmlspecialchars($row['city']).'</option>';
+                                    }
+                                } else {
+                                    echo '<option value="" disabled>Database not connected</option>';
+                                    echo '<option value="Mumbai">Mumbai (Demo)</option>';
+                                    echo '<option value="Delhi">Delhi (Demo)</option>';
                                 }
                                 ?>
                             </select>
@@ -515,9 +540,15 @@ require 'helpers/init_conn_db.php';
                             <select name="arr_city" class="city-select-mmt" required>
                                 <option value="" disabled selected>City or Airport</option>
                                 <?php
-                                mysqli_data_seek($res, 0);
-                                while ($row = mysqli_fetch_assoc($res)) {
-                                    echo '<option value="'.htmlspecialchars($row['city']).'">'.htmlspecialchars($row['city']).'</option>';
+                                if ($is_db_connected && $res) {
+                                    mysqli_data_seek($res, 0);
+                                    while ($row = mysqli_fetch_assoc($res)) {
+                                        echo '<option value="'.htmlspecialchars($row['city']).'">'.htmlspecialchars($row['city']).'</option>';
+                                    }
+                                } else {
+                                    echo '<option value="" disabled>Database not connected</option>';
+                                    echo '<option value="Bangalore">Bangalore (Demo)</option>';
+                                    echo '<option value="Dubai">Dubai (Demo)</option>';
                                 }
                                 ?>
                             </select>

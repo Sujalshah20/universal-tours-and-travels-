@@ -60,26 +60,30 @@ if(isset($_POST['signup_submit'])) {
                                 exit();            
                             } else {
                                 mysqli_stmt_bind_param($stmt,'ss',$username,$username);            
-                                mysqli_stmt_execute($stmt);
-                                $result = mysqli_stmt_get_result($stmt);
-                                if($row = mysqli_fetch_assoc($result)) {
-                                    $pwd_check = password_verify($password,$row['password']);
-                                    if($pwd_check == false) {
+                            mysqli_stmt_execute($stmt);
+                            mysqli_stmt_store_result($stmt);
+                            if (mysqli_stmt_num_rows($stmt) > 0) {
+                                mysqli_stmt_bind_result($stmt, $id, $uname, $mail, $pwd);
+                                if (mysqli_stmt_fetch($stmt)) {
+                                    $pwd_check = password_verify($password, $pwd);
+                                    if ($pwd_check == false) {
                                         header('Location: ../index.php?error=wrongpwd');
-                                        exit();    
-                                    }
-                                    else if($pwd_check == true) {
-                                        session_start();
-                                        $_SESSION['userId'] = $row['user_id'];
-                                        $_SESSION['userUid'] = $row['username'];
-                                        $_SESSION['userMail'] = $row['email'];                                        
+                                        exit();
+                                    } else if ($pwd_check == true) {
+                                        if (session_status() == PHP_SESSION_NONE) {
+                                            session_start();
+                                        }
+                                        $_SESSION['userId'] = $id;
+                                        $_SESSION['userUid'] = $uname;
+                                        $_SESSION['userMail'] = $mail;
                                         header('Location: ../index.php?login=success');
-                                        exit();                  
+                                        exit();
                                     } else {
                                         header('Location: ../index.php?error=invalidcred');
-                                        exit();                    
+                                        exit();
                                     }
                                 }
+                            }
                             }                                                    
                         }
                     }
